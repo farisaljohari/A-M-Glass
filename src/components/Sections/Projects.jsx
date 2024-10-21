@@ -135,7 +135,7 @@ const RandomAutoplaySlider = ({ images }) => {
       }
     };
 
-    const interval = Math.floor(Math.random() * (5000 - 3000 + 1)) + 11000; // Random interval between 3s and 5s
+    const interval = Math.floor(Math.random() * (5000 - 3000 + 1)) + 14000; // Random interval between 3s and 5s
     const timer = setInterval(autoplay, interval);
 
     return () => clearInterval(timer); // Cleanup on unmount
