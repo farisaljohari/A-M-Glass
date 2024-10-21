@@ -120,22 +120,25 @@ const Row = styled.div`
   margin-bottom: 30px;
 
   @media (max-width: 860px) {
-    flex-direction: column; /* Stack items on small screens */
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: center; /* Center the content */
   }
 `;
 
 const FormWrapper = styled.div`
-  padding: 30px; /* Add padding around the form */
-  background-color: #fff; /* White background for the form */
-  border-radius: 10px; /* Slightly rounded corners */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  margin-right: 30px; /* Space between form and contact info */
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-right: 30px;
+  width: 100%; /* Ensure it takes up full width on smaller screens */
 
   @media (max-width: 860px) {
-    margin-right: 0; /* Reset margin on small screens */
+    margin-right: 0;
+    margin-bottom: 30px; /* Add space between form and contact info */
+    width: 100%; /* Take full width on small screens */
   }
 `;
-
 const Form = styled.form`
   padding: 20px 0;
 
@@ -193,49 +196,19 @@ const ButtonInput = styled.input`
 `;
 
 const ContactInfo = styled.div`
-  color: #fff; /* Change text color to white for contrast against dark background */
-  padding: 40px; /* Increased padding around the contact info */
-  background-color: #1c2833; /* Dark background for contrast */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
-  flex: 1; /* Allow it to fill the remaining space */
+  color: #fff;
+  padding: 40px;
+  background-color: #1c2833;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  flex: 1;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  gap: 20px; /* Spacing between items */
+  flex-direction: column;
+  gap: 20px;
+  width: 100%; /* Ensure it takes up full width on smaller screens */
 
-  h3 {
-    font-size: 24px; /* Larger header */
-    margin-bottom: 20px; /* Spacing below header */
-    color: white; /* Gold color for header for a touch of elegance */
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center; /* Center icons vertically */
-    gap: 15px; /* Spacing between icon and text */
-    padding: 15px; /* Padding for each contact item */
-    border-radius: 10px; /* Rounded corners for items */
-    transition: background-color 0.3s; /* Smooth background color transition */
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
-    }
-  }
-
-  p {
-    margin: 0; /* Remove margin from paragraphs */
-    color: white; /* Light gray for better readability */
-    font-size: 14px; /* Set a consistent font size */
-  }
-
-  a {
-    color: white; /* Standard link color */
-    text-decoration: none; /* Remove underline */
-    transition: color 0.3s; /* Smooth color transition */
-
-    &:hover {
-      color: #5499c7; /* Change link color on hover */
-    }
+  @media (max-width: 860px) {
+    width: 100%; /* Take full width on small screens */
   }
 `;
 
@@ -257,7 +230,10 @@ const SocialIcons = styled.div`
 `;
 
 const SumbitWrapper = styled.div`
-  @media (max-width: 991px) {
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 860px) {
     width: 100%;
     margin-bottom: 50px;
   }

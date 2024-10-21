@@ -4,6 +4,7 @@ import styled from "styled-components";
 import HeaderImage from "../../assets/img/main1.jpeg";
 import QuotesIcon from "../../assets/svg/Quotes";
 import Dots from "../../assets/svg/Dots";
+import { Link } from "react-scroll";
 
 export default function Header() {
   return (
