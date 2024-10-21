@@ -14,9 +14,10 @@ export default function TopNavbar() {
   const [sidebarOpen, toggleSidebar] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => setY(window.scrollY));
+    const handleScroll = () => setY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", () => setY(window.scrollY));
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [y]);
 
@@ -32,12 +33,15 @@ export default function TopNavbar() {
           <Link className="pointer flexNullCenter" to="home" smooth={true}>
             <h1 style={{ marginLeft: "15px" }} className="font20 extraBold">
               <div style={{ position: "relative" }}>
-                <div style={{ marginTop: "15px" }}>
+                <div
+                  style={{
+                    marginTop: "15px",
+                    opacity: y > 0 ? 1 : 0, // Control visibility based on scroll position
+                    transition: "opacity 0.5s ease",
+                  }}
+                >
                   <img src={LogoIcon} alt="Logo" width={"120px"} />
                 </div>
-                {/* <div style={{ position: "absolute", top: "21%", left: "80%" }}>
-                  <img src={LogoPartIcon} alt="Logo" width={"170px"} />
-                </div> */}
               </div>
             </h1>
           </Link>

@@ -104,13 +104,18 @@ export default function Projects() {
           </HeaderInfo>
           <div className="row">
             {projectData.map((project, index) => (
-              <ProjectCard className="col-xs-12 col-sm-6 col-md-4" key={index}>
+              <ProjectCard
+                className="col-xs-12 col-sm-6" // Two cards per row on small and medium screens
+                key={index}
+              >
                 <RandomAutoplaySlider images={project.images} />
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <LocationInfo>
-                  <FontAwesomeIcon icon={faMapMarkerAlt} />
-                  <p>{project.location}</p>
-                </LocationInfo>
+                <ContentWrapper>
+                  <ProjectTitle>{project.title}</ProjectTitle>
+                  <LocationInfo>
+                    <FontAwesomeIcon icon={faMapMarkerAlt} />
+                    <p>{project.location}</p>
+                  </LocationInfo>
+                </ContentWrapper>
               </ProjectCard>
             ))}
           </div>
@@ -130,7 +135,7 @@ const RandomAutoplaySlider = ({ images }) => {
       }
     };
 
-    const interval = Math.floor(Math.random() * (5000 - 3000 + 1)) + 3000; // Random interval between 3s and 5s
+    const interval = Math.floor(Math.random() * (5000 - 3000 + 1)) + 11000; // Random interval between 3s and 5s
     const timer = setInterval(autoplay, interval);
 
     return () => clearInterval(timer); // Cleanup on unmount
@@ -148,6 +153,8 @@ const RandomAutoplaySlider = ({ images }) => {
       touchThreshold={10}
       autoplay={false}
       arrows={true}
+      prevArrow={<PrevArrow />} // Use custom left arrow
+      nextArrow={<NextArrow />} // Use custom right arrow
       ref={sliderRef}
     >
       {images.map((image, imgIndex) => (
@@ -160,77 +167,111 @@ const RandomAutoplaySlider = ({ images }) => {
 };
 
 // Styled Components
+const PrevArrow = ({ onClick }) => (
+  <ArrowButton className="slick-prev" onClick={onClick}></ArrowButton>
+);
+
+const NextArrow = ({ onClick }) => (
+  <ArrowButton className="slick-next" onClick={onClick}></ArrowButton>
+);
+
+// Styled Component for Arrow Button
+const ArrowButton = styled.button`
+  background: none;
+  border: none;
+  color: #23ce6b; /* Customize color */
+  font-size: 24px; /* Customize size */
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+
+  &.slick-prev {
+    left: 10px; /* Position for left arrow */
+  }
+
+  &.slick-next {
+    right: 10px; /* Position for right arrow */
+  }
+
+  &:hover {
+    color: #1e8a50; /* Hover color */
+  }
+`;
 
 const Wrapper = styled.section`
   width: 100%;
-  padding: 50px 0; // Space around section
+  padding: 50px 0;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
   img {
-    border-radius: 10px; // Rounded corners
-    display: block; // Prevent bottom space
+    border-radius: 10px;
+    display: block;
+    width: 100%;
+    height: auto;
   }
 `;
 
 const HeaderInfo = styled.div`
-  text-align: center; // Centered header
-  margin-bottom: 30px; // Space below header
+  text-align: center;
+  margin-bottom: 30px;
 `;
 
 const ProjectCard = styled.div`
-  position: relative; // Enable positioning for absolute elements
-  margin-bottom: 30px; // Space between projects
-  overflow: hidden; // Clip overflow
-  border-radius: 10px; // Rounded corners for cards
-  transition: transform 0.3s ease; // Animation on hover
+  margin-bottom: 30px;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    transform: scale(1.05); // Scale effect on hover
+    transform: translateY(-10px); // Lift effect on hover
   }
 `;
 
 const Image = styled.div`
   width: 100%;
-  height: 220px; // Fixed height for the card
-  overflow: hidden; // Prevent overflow
+  height: 250px;
+  overflow: hidden;
 
   img {
-    width: 100%; // Fill the container
-    height: 100%; // Fill the height of the container
-    object-fit: cover; // Cover the entire area without distortion
-    border-radius: 10px; // Keep rounded corners
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
-const ProjectTitle = styled.h2`
+const ContentWrapper = styled.div`
+  padding: 20px;
   text-align: center;
-  font-size: 1.2em;
+`;
+
+const ProjectTitle = styled.h2`
+  font-size: 1.5em;
   font-weight: bold;
-  color: #ffffff; // White text color
-  margin: 10px 0; // Space around title
-  position: absolute; // Positioning relative to card
-  top: 10px; // Adjust position as needed
-  left: 50%; // Center horizontally
-  transform: translateX(-50%); // Centering adjustment
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); // Add shadow for readability
+  color: #333;
+  margin-bottom: 10px;
 `;
 
 const LocationInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
   font-size: 0.9em;
-  font-weight: bold;
-  color: white; // Change icon and text color
-  position: absolute; // Positioning relative to card
-  bottom: 10px; // Position above bottom
-  left: 50%; // Center horizontally
-  transform: translateX(-50%); // Adjust for centering
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  color: #777;
 
   svg {
-    margin-right: 5px; // Space between icon and text
-    color: white; // Change icon color
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7)); // Shadow for the SVG
+    margin-right: 8px;
+    color: #777;
+  }
+
+  p {
+    margin: 0;
   }
 `;

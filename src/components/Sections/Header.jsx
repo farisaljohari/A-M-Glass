@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import LogoIcon from "../../assets/img/full_logo.png";
 // Assets
 import HeaderImage from "../../assets/img/main1.jpeg";
 import QuotesIcon from "../../assets/svg/Quotes";
@@ -8,59 +9,67 @@ import { Link } from "react-scroll";
 
 export default function Header() {
   return (
-    <Wrapper id="home" className="container flexSpaceCenter">
-      <LeftSide className="flexCenter">
-        <div>
-          <h1 className="extraBold font60">
-            Welcome to A&M Architectural Glass,Inc ​Website
-          </h1>
-          <HeaderP className="font18 semiBold">
-            We appreciate the time you are spending to check out our company! We
-            thank you in advance for letting us take care of this project for
-            you, Quality and great service is what we offer, the best products
-            and services available.
-          </HeaderP>
-          <BtnWrapper>
-            <Link to="projects">
-              <CustomButton>See Our Projects</CustomButton>
-            </Link>
-          </BtnWrapper>
-        </div>
-      </LeftSide>
-      <RightSide>
-        <ImageWrapper>
-          <Img
-            className="radius8"
-            src={HeaderImage}
-            alt="office"
-            style={{ zIndex: 9, width: "550px", height: "500px" }}
-          />
-          <QuoteWrapper className="flexCenter darkBg radius8">
-            <QuotesWrapper>
-              <QuotesIcon />
-            </QuotesWrapper>
-            <div>
-              <p className="font15 whiteColor">
-                <em>
-                  We believe that the smallest things can make a big difference.
-                </em>
-              </p>
-            </div>
-          </QuoteWrapper>
-          <DotsWrapper>
-            <Dots />
-          </DotsWrapper>
-        </ImageWrapper>
-        <GreyDiv className="lightBg"></GreyDiv>
-      </RightSide>
-    </Wrapper>
+    <>
+      <div id="home" style={{ marginTop: "100px" }}>
+        <LogoRow className="flexCenter">
+          <img src={LogoIcon} alt="Logo" width={"320px"} />
+        </LogoRow>{" "}
+      </div>
+      <Wrapper id="home" className="container flexSpaceCenter">
+        <LeftSide className="flexCenter">
+          <div>
+            <h1 className="extraBold font60">
+              Welcome to A&M Architectural Glass,Inc ​Website
+            </h1>
+            <HeaderP className="font18 semiBold">
+              We appreciate the time you are spending to check out our company!
+              We thank you in advance for letting us take care of this project
+              for you, Quality and great service is what we offer, the best
+              products and services available.
+            </HeaderP>
+            <BtnWrapper>
+              <Link to="projects">
+                <CustomButton>See Our Projects</CustomButton>
+              </Link>
+            </BtnWrapper>
+          </div>
+        </LeftSide>
+        <RightSide>
+          <ImageWrapper>
+            <Img
+              className="radius8"
+              src={HeaderImage}
+              alt="office"
+              style={{ zIndex: 9, width: "550px", height: "500px" }}
+            />
+            <QuoteWrapper className="flexCenter darkBg radius8">
+              <QuotesWrapper>
+                <QuotesIcon />
+              </QuotesWrapper>
+              <div>
+                <p className="font15 whiteColor">
+                  <em>
+                    We believe that the smallest things can make a big
+                    difference.
+                  </em>
+                </p>
+              </div>
+            </QuoteWrapper>
+            <DotsWrapper>
+              <Dots />
+            </DotsWrapper>
+          </ImageWrapper>
+          <GreyDiv className="lightBg"></GreyDiv>
+        </RightSide>
+      </Wrapper>
+    </>
   );
 }
 
 const Wrapper = styled.section`
-  padding-top: 80px;
   width: 100%;
-  min-height: 840px;
+  min-height: 500px;
+  margin-bottom: 50px;
   @media (max-width: 960px) {
     flex-direction: column;
   }
@@ -193,5 +202,14 @@ const DotsWrapper = styled.div`
   }
   @media (max-width: 560px) {
     display: none;
+  }
+`;
+const LogoRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px; /* Add space between logo and content */
+  @media (max-width: 960px) {
+    margin-bottom: 30px; /* Adjust margin for smaller screens */
   }
 `;
