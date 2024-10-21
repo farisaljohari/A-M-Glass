@@ -20,7 +20,9 @@ export default function Header() {
             and services available.
           </HeaderP>
           <BtnWrapper>
-            <CustomButton>See Our Projects</CustomButton>
+            <Link to="projects">
+              <CustomButton>See Our Projects</CustomButton>
+            </Link>
           </BtnWrapper>
         </div>
       </LeftSide>

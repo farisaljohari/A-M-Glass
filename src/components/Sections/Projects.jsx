@@ -100,7 +100,7 @@ export default function Projects() {
       <div className="whiteBg">
         <div className="container">
           <HeaderInfo>
-            <h1 className="font40 extraBold">Our Awesome Projects</h1>
+            <h1 className="font40 extraBold">Our Projects</h1>
           </HeaderInfo>
           <div className="row">
             {projectData.map((project, index) => (
