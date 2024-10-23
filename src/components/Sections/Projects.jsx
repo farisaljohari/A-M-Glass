@@ -285,8 +285,18 @@ const ModalContent = styled.div`
 const ModalImage = styled.div`
   img {
     width: 100%; // Full width in modal
-    height: 80vh; // Full height in modal
+    height: 80vh; // Full height in modal for large screens
     border-radius: 8px;
+
+    // For tablet view
+    @media (max-width: 1024px) {
+      height: 60vh; // Reduce height for tablets
+    }
+
+    // For mobile view
+    @media (max-width: 768px) {
+      height: 40vh; // Further reduce height for mobile
+    }
   }
 `;
 
