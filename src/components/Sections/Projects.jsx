@@ -344,5 +344,15 @@ const CardImage = styled.div`
     width: 100%; // Set a smaller size for card images
     height: 550px; // Maintain aspect ratio
     border-radius: 10px;
+
+    // Tablet view
+    @media (max-width: 1024px) {
+      height: 400px; // Reduced height for tablet
+    }
+
+    // Mobile view
+    @media (max-width: 768px) {
+      height: 300px; // Reduced height for mobile
+    }
   }
 `;
