@@ -333,7 +333,7 @@ const ArrowButton = styled.button`
 const CardImage = styled.div`
   img {
     width: 100%; // Set a smaller size for card images
-    height: 350px; // Maintain aspect ratio
+    height: 550px; // Maintain aspect ratio
     border-radius: 10px;
   }
 `;
