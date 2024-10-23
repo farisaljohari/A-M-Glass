@@ -260,6 +260,7 @@ const ModalWrapper = styled.div`
 
 const CloseButton = styled.button`
   position: absolute;
+  z-index: 1100;
   top: 20px;
   right: 40px;
   background: transparent;
