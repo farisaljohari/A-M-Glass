@@ -302,7 +302,6 @@ const ModalImage = styled.div`
 
 const ProjectDetails = styled.div`
   margin-top: 20px;
-  text-align: center;
 
   h2 {
     font-size: 24px;
