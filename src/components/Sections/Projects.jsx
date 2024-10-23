@@ -261,14 +261,14 @@ const ModalWrapper = styled.div`
 const CloseButton = styled.button`
   position: absolute;
   top: 20px;
-  right: 20px;
+  right: 40px;
   background: transparent;
   border: none;
-  color: white;
+  color: #e74c3c;
   cursor: pointer;
   font-size: 24px;
   &:hover {
-    color: #ffcc00; // Change color on hover
+    color: #c0392b; // Change color on hover
   }
 `;
 
