@@ -12,7 +12,7 @@ export default function Header() {
     <>
       <div id="home" style={{ marginTop: "100px" }}>
         <LogoRow className="flexCenter">
-          <img src={LogoIcon} alt="Logo" width={"320px"} />
+          <img src={LogoIcon} alt="Logo" width={"420px"} />
         </LogoRow>{" "}
       </div>
       <Wrapper id="home" className="container flexSpaceCenter">

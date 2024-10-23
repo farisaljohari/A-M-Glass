@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // Assets
 import ProjectImg1_1 from "../../assets/img/projects/Costco1.jpeg";
@@ -95,6 +95,21 @@ const projectData = [
 ];
 
 export default function Projects() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeProject, setActiveProject] = useState(null);
+
+  // Open modal with selected project
+  const handleProjectClick = (project) => {
+    setActiveProject(project);
+    setModalOpen(true);
+  };
+
+  // Close the modal
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setActiveProject(null);
+  };
+
   return (
     <Wrapper id="projects">
       <div className="whiteBg">
@@ -107,6 +122,7 @@ export default function Projects() {
               <ProjectCard
                 className="col-xs-12 col-sm-6" // Two cards per row on small and medium screens
                 key={index}
+                onClick={() => handleProjectClick(project)} // Open modal on click
               >
                 <RandomAutoplaySlider images={project.images} />
                 <ContentWrapper>
@@ -121,52 +137,168 @@ export default function Projects() {
           </div>
         </div>
       </div>
+
+      {modalOpen && (
+        <ModalWrapper>
+          <CloseButton onClick={handleCloseModal}>
+            <FontAwesomeIcon icon={faTimes} />
+          </CloseButton>
+          <ModalContent>
+            <ModalSlider images={activeProject.images} />
+            <ProjectDetails>
+              <h2>{activeProject.title}</h2>
+              <LocationInfo>
+                <FontAwesomeIcon icon={faMapMarkerAlt} />
+                <p>{activeProject.location}</p>
+              </LocationInfo>
+            </ProjectDetails>
+          </ModalContent>
+        </ModalWrapper>
+      )}
     </Wrapper>
   );
 }
 
-const RandomAutoplaySlider = ({ images }) => {
-  const sliderRef = useRef(null);
+// Slider Component inside Modal
+const ModalSlider = ({ images }) => (
+  <Slider
+    dots={false}
+    infinite={true}
+    speed={500}
+    slidesToShow={1}
+    slidesToScroll={1}
+    swipe={true}
+    autoplay={false}
+    arrows={true}
+    prevArrow={<PrevArrow />}
+    nextArrow={<NextArrow />}
+  >
+    {images.map((image, imgIndex) => (
+      <ModalImage key={imgIndex}>
+        <img src={image} alt={`Project Image ${imgIndex + 1}`} />
+      </ModalImage>
+    ))}
+  </Slider>
+);
 
-  useEffect(() => {
-    const autoplay = () => {
-      if (sliderRef.current) {
-        sliderRef.current.slickNext();
-      }
-    };
-
-    const interval = Math.floor(Math.random() * (5000 - 3000 + 1)) + 14000; // Random interval between 3s and 5s
-    const timer = setInterval(autoplay, interval);
-
-    return () => clearInterval(timer); // Cleanup on unmount
-  }, []);
-
-  return (
-    <Slider
-      dots={false}
-      infinite={true}
-      speed={500}
-      slidesToShow={1}
-      slidesToScroll={1}
-      swipe={true}
-      swipeToSlide={true}
-      touchThreshold={10}
-      autoplay={false}
-      arrows={true}
-      prevArrow={<PrevArrow />} // Use custom left arrow
-      nextArrow={<NextArrow />} // Use custom right arrow
-      ref={sliderRef}
-    >
-      {images.map((image, imgIndex) => (
-        <Image key={imgIndex}>
-          <img src={image} alt={`Project Image ${imgIndex + 1}`} />
-        </Image>
-      ))}
-    </Slider>
-  );
-};
+// Auto-playing slider for each project (outside the modal)
+const RandomAutoplaySlider = ({ images }) => (
+  <Slider
+    dots={true}
+    infinite={true}
+    speed={500}
+    slidesToShow={1}
+    slidesToScroll={1}
+    autoplay={true}
+    autoplaySpeed={14000}
+  >
+    {images.map((image, imgIndex) => (
+      <CardImage key={imgIndex}>
+        <img src={image} alt={`Project Image ${imgIndex + 1}`} />
+      </CardImage>
+    ))}
+  </Slider>
+);
 
 // Styled Components
+
+const Wrapper = styled.section`
+  padding: 60px 0;
+`;
+
+const HeaderInfo = styled.div`
+  text-align: center;
+  margin-bottom: 40px;
+`;
+
+const ProjectCard = styled.div`
+  cursor: pointer;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition: 0.3s ease-in-out;
+  padding: 10px;
+  &:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+`;
+
+const ContentWrapper = styled.div`
+  margin-top: 20px;
+`;
+
+const ProjectTitle = styled.h3`
+  font-size: 20px;
+  color: #333;
+`;
+
+const LocationInfo = styled.div`
+  display: flex;
+
+  align-items: center;
+  font-size: 14px;
+  color: #777;
+
+  & svg {
+    margin-right: 5px;
+  }
+`;
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  &:hover {
+    color: #ffcc00; // Change color on hover
+  }
+`;
+
+const ModalContent = styled.div`
+  background: white;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 800px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const ModalImage = styled.div`
+  img {
+    width: 100%; // Full width in modal
+    height: 80vh; // Full height in modal
+    border-radius: 8px;
+  }
+`;
+
+const ProjectDetails = styled.div`
+  margin-top: 20px;
+  text-align: center;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+`;
+
 const PrevArrow = ({ onClick }) => (
   <ArrowButton className="slick-prev" onClick={onClick}></ArrowButton>
 );
@@ -174,13 +306,11 @@ const PrevArrow = ({ onClick }) => (
 const NextArrow = ({ onClick }) => (
   <ArrowButton className="slick-next" onClick={onClick}></ArrowButton>
 );
-
-// Styled Component for Arrow Button
 const ArrowButton = styled.button`
   background: none;
   border: none;
-  color: #23ce6b; /* Customize color */
-  font-size: 24px; /* Customize size */
+  color: #fff;
+  font-size: 30px;
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -188,90 +318,21 @@ const ArrowButton = styled.button`
   z-index: 1;
 
   &.slick-prev {
-    left: 10px; /* Position for left arrow */
+    left: 10px;
   }
 
   &.slick-next {
-    right: 10px; /* Position for right arrow */
+    right: 10px;
   }
 
   &:hover {
-    color: #1e8a50; /* Hover color */
+    color: #ccc;
   }
 `;
-
-const Wrapper = styled.section`
-  width: 100%;
-  padding: 50px 0;
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
+const CardImage = styled.div`
   img {
+    width: 100%; // Set a smaller size for card images
+    height: 350px; // Maintain aspect ratio
     border-radius: 10px;
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-`;
-
-const HeaderInfo = styled.div`
-  text-align: center;
-  margin-bottom: 30px;
-`;
-
-const ProjectCard = styled.div`
-  margin-bottom: 30px;
-  transition: transform 0.3s ease-in-out;
-  overflow: hidden;
-  border-radius: 10px;
-  background-color: #f8f8f8;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    transform: translateY(-10px); // Lift effect on hover
-  }
-`;
-
-const Image = styled.div`
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ContentWrapper = styled.div`
-  padding: 20px;
-  text-align: center;
-`;
-
-const ProjectTitle = styled.h2`
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-`;
-
-const LocationInfo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9em;
-  color: #777;
-
-  svg {
-    margin-right: 8px;
-    color: #777;
-  }
-
-  p {
-    margin: 0;
   }
 `;
