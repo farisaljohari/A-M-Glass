@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,73 +7,8 @@ import {
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
-import emailjs from "emailjs-com"; // Ensure you're using emailjs-com for compatibility
-import { useSnackbar } from "notistack"; // Import useSnackbar
-
-const initialState = {
-  name: "",
-  email: "",
-  message: "",
-};
 
 export default function Contact() {
-  const { enqueueSnackbar } = useSnackbar(); // Use useSnackbar
-  const [{ name, email, message }, setState] = useState(initialState);
-  const [validEmail, setValidEmail] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setState((prevState) => ({ ...prevState, [name]: value }));
-    if (name === "email") {
-      setValidEmail(validateEmail(value));
-    }
-  };
-
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const clearState = () => setState({ ...initialState });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validEmail || !message) {
-      enqueueSnackbar("Please enter a valid email and message.", {
-        variant: "error",
-      }); // Use Notistack for error
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    const templateParams = {
-      email,
-      name: name || email.split("@")[0],
-      message,
-    };
-
-    // Using EmailJS to send the email
-    emailjs
-      .send(
-        "service_nxdc3m7", // Replace with your service ID
-        "template_qfacgdq", // Replace with your template ID
-        templateParams,
-        "gj9MvZ8Ikfo_aa7xS" // Replace with your user ID
-      )
-      .then(() => {
-        enqueueSnackbar("Email successfully sent!", { variant: "success" }); // Use Notistack for success
-        clearState();
-      })
-      .catch(() => {
-        enqueueSnackbar("Failed to send email.", { variant: "error" }); // Use Notistack for error
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  };
-
   return (
     <Wrapper id="contact">
       <div
@@ -93,39 +28,18 @@ export default function Contact() {
           </HeaderInfo>
           <Row>
             <FormWrapper className="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-              <Form onSubmit={handleSubmit}>
+              <Form>
                 <label className="font13">First name:</label>
-                <Input
-                  type="text"
-                  id="name"
-                  name="name"
-                  onChange={handleChange}
-                  value={name}
-                />
+                <Input type="text" id="fname" name="fname" />
                 <label className="font13">Email:</label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  onChange={handleChange}
-                  value={email}
-                />
-                {!validEmail && email && (
-                  <p style={{ color: "red" }}>Invalid email</p>
-                )}
+                <Input type="email" id="email" name="email" />
                 <label className="font13">Message:</label>
-                <Textarea
-                  rows="4"
-                  id="message"
-                  name="message"
-                  onChange={handleChange}
-                  value={message}
-                />
+                <Textarea rows="4" id="message" name="message" />
                 <SumbitWrapper className="flex">
                   <ButtonInput
                     type="submit"
                     value="Send Message"
-                    disabled={isSubmitting}
+                    className="pointer animate radius8"
                   />
                 </SumbitWrapper>
               </Form>
@@ -162,21 +76,21 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FontAwesomeIcon icon={faFacebook} />
+                  <FontAwesomeIcon icon={faFacebook} /> {/* Facebook icon */}
                 </a>
                 <a
                   href={"https://www.instagram.com/"}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FontAwesomeIcon icon={faInstagram} />
+                  <FontAwesomeIcon icon={faInstagram} /> {/* Instagram icon */}
                 </a>
                 <a
                   href={"https://maps.app.goo.gl/qG1gXgzQ1M9Vpncz6"}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                  <FontAwesomeIcon icon={faMapMarkerAlt} /> {/* Maps icon */}
                 </a>
               </SocialIcons>
             </ContactInfo>
@@ -187,15 +101,14 @@ export default function Contact() {
   );
 }
 
-// Styled components remain the same
 const Wrapper = styled.section`
   width: 100%;
-  background-color: #fff;
+  background-color: #fff; /* Set the background of the entire section to white */
 `;
 
 const HeaderInfo = styled.div`
   padding: 70px 0 30px 0;
-  color: #000;
+  color: #000; /* Set text color to black for better contrast */
   @media (max-width: 860px) {
     text-align: center;
   }
@@ -207,8 +120,8 @@ const Row = styled.div`
   margin-bottom: 30px;
 
   @media (max-width: 860px) {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: center; /* Center the content */
   }
 `;
 
@@ -218,22 +131,21 @@ const FormWrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-right: 30px;
-  width: 100%;
+  width: 100%; /* Ensure it takes up full width on smaller screens */
 
   @media (max-width: 860px) {
     margin-right: 0;
-    margin-bottom: 30px;
-    width: 100%;
+    margin-bottom: 30px; /* Add space between form and contact info */
+    width: 100%; /* Take full width on small screens */
   }
 `;
-
 const Form = styled.form`
   padding: 20px 0;
 
   label {
     display: block;
     margin-bottom: 5px;
-    color: #333;
+    color: #333; /* Darker label color */
   }
 `;
 
@@ -243,12 +155,12 @@ const Input = styled.input`
   border: 0;
   outline: none;
   border-bottom: 1px solid #707070;
-  height: 40px;
+  height: 40px; /* Increased height for a better look */
   margin-bottom: 30px;
-  padding: 5px;
+  padding: 5px; /* Added padding for better spacing */
 
   &:focus {
-    border-bottom: 2px solid #1c2833;
+    border-bottom: 2px solid #1c2833; /* Change border color on focus */
   }
 `;
 
@@ -260,16 +172,11 @@ const Textarea = styled.textarea`
   border-bottom: 1px solid #707070;
   min-height: 100px;
   margin-bottom: 30px;
-  padding: 5px;
+  padding: 5px; /* Added padding for better spacing */
 
   &:focus {
-    border-bottom: 2px solid #1c2833;
+    border-bottom: 2px solid #1c2833; /* Change border color on focus */
   }
-`;
-
-const SumbitWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
 `;
 
 const ButtonInput = styled.input`
@@ -349,5 +256,15 @@ const SocialIcons = styled.div`
     &:hover {
       color: #5499c7; /* Change icon color on hover */
     }
+  }
+`;
+
+const SumbitWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 860px) {
+    width: 100%;
+    margin-bottom: 50px;
   }
 `;
