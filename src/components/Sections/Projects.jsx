@@ -142,7 +142,7 @@ const projectData = [
     title: "Auto Zone",
   },
   {
-    images: [ProjectImg12_1, ProjectImg12_2, ProjectImg12_3, ProjectImg13_1],
+    images: [ProjectImg12_3, ProjectImg12_1, ProjectImg12_2, ProjectImg13_1],
     location: "Rosenberg, Texas",
     title: "OCUSOFT",
   },
@@ -259,7 +259,7 @@ const RandomAutoplaySlider = ({ images }) => (
     slidesToShow={1}
     slidesToScroll={1}
     autoplay={true}
-    autoplaySpeed={14000}
+    autoplaySpeed={8000}
   >
     {images.map((image, imgIndex) => (
       <CardImage key={imgIndex}>
