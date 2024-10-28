@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LogoIcon from "../../assets/img/full_logo.png";
 // Assets
-import HeaderImage from "../../assets/img/main1.jpeg";
+import HeaderImage from "../../assets/img/intro.JPG";
 import QuotesIcon from "../../assets/svg/Quotes";
 import Dots from "../../assets/svg/Dots";
 import { Link } from "react-scroll";
@@ -19,7 +19,9 @@ export default function Header() {
         <LeftSide className="flexCenter">
           <div>
             <h1 className="extraBold font60">
-              Welcome to A&M Architectural Glass,Inc ​Website
+              Welcome to <span style={{ color: "#ff0202" }}>A&M</span>{" "}
+              <span style={{ color: "#1e00ff" }}>Architectural Glass,Inc</span>{" "}
+              ​Website
             </h1>
             <HeaderP className="font18 semiBold">
               We appreciate the time you are spending to check out our company!

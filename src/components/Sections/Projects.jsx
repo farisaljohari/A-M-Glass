@@ -11,7 +11,9 @@ import ProjectImg1_3 from "../../assets/img/projects/Costco3.jpeg";
 import ProjectImg1_4 from "../../assets/img/projects/Costco4.jpeg";
 import ProjectImg2_1 from "../../assets/img/projects/proj2.1.jpeg";
 import ProjectImg2_2 from "../../assets/img/projects/proj2.2.jpeg";
+import ProjectImg2_4 from "../../assets/img/projects/proj2.3.png";
 import ProjectImg2_3 from "../../assets/img/projects/proj2.3.jpeg";
+import ProjectImg2_5 from "../../assets/img/projects/proj2.5.png";
 import ProjectImg3_1 from "../../assets/img/projects/proj3.1.jpeg";
 import ProjectImg3_2 from "../../assets/img/projects/proj3.2.jpeg";
 import ProjectImg3_3 from "../../assets/img/projects/proj3.3.jpeg";
@@ -35,9 +37,32 @@ import ProjectImg8_3 from "../../assets/img/projects/proj8.3.jpeg";
 import ProjectImg8_4 from "../../assets/img/projects/proj8.4.jpeg";
 import ProjectImg8_5 from "../../assets/img/projects/proj8.5.jpeg";
 import ProjectImg8_6 from "../../assets/img/projects/proj8.6.jpeg";
+import ProjectImg8_7 from "../../assets/img/projects/proj8.7.jpeg";
+import ProjectImg8_8 from "../../assets/img/projects/proj8.8.jpeg";
 import ProjectImg9_1 from "../../assets/img/projects/proj9.1.jpeg";
 import ProjectImg9_2 from "../../assets/img/projects/proj9.2.jpeg";
 import ProjectImg9_3 from "../../assets/img/projects/proj9.3.jpeg";
+import ProjectImg10_1 from "../../assets/img/projects/proj10.1.jpeg";
+import ProjectImg10_2 from "../../assets/img/projects/proj10.2.jpeg";
+import ProjectImg10_3 from "../../assets/img/projects/proj10.3.jpeg";
+import ProjectImg10_4 from "../../assets/img/projects/proj10.4.jpeg";
+import ProjectImg10_5 from "../../assets/img/projects/proj10.5.jpeg";
+import ProjectImg11_1 from "../../assets/img/projects/proj11.1.jpeg";
+import ProjectImg11_2 from "../../assets/img/projects/proj11.4.jpeg";
+import ProjectImg11_3 from "../../assets/img/projects/proj11.2.jpeg";
+import ProjectImg11_4 from "../../assets/img/projects/proj11.3.jpeg";
+import ProjectImg12_1 from "../../assets/img/projects/proj12.1.jpeg";
+import ProjectImg12_2 from "../../assets/img/projects/proj12.4.jpeg";
+import ProjectImg12_3 from "../../assets/img/projects/proj12.2.jpeg";
+import ProjectImg13_1 from "../../assets/img/projects/proj13.1.jpeg";
+import ProjectImg13_2 from "../../assets/img/projects/proj13.2.jpeg";
+import ProjectImg13_3 from "../../assets/img/projects/proj13.3.jpeg";
+import ProjectImg13_4 from "../../assets/img/projects/proj13.4.jpeg";
+import ProjectImg14_1 from "../../assets/img/projects/proj14.1.jpeg";
+import ProjectImg15_1 from "../../assets/img/projects/proj15.1.jpeg";
+import ProjectImg15_2 from "../../assets/img/projects/proj15.2.jpeg";
+import ProjectImg15_3 from "../../assets/img/projects/proj15.3.jpeg";
+import ProjectImg15_4 from "../../assets/img/projects/proj15.4.jpeg";
 
 const projectData = [
   {
@@ -46,12 +71,18 @@ const projectData = [
     title: "Costco",
   },
   {
-    images: [ProjectImg2_1, ProjectImg2_2, ProjectImg2_3],
-    location: "Houston, Texas",
+    images: [
+      ProjectImg2_4,
+      ProjectImg2_5,
+      ProjectImg2_1,
+      ProjectImg2_2,
+      ProjectImg2_3,
+    ],
+    location: "Houston, Texas, Post Oak Blvd",
     title: "Tanishq Jewelers",
   },
   {
-    images: [ProjectImg3_1, ProjectImg3_2, ProjectImg3_3],
+    images: [ProjectImg3_3, ProjectImg3_1, ProjectImg3_2],
     location: "Beasley, Texas",
     title: "Chemical factory",
   },
@@ -61,13 +92,13 @@ const projectData = [
     title: "Steel supply",
   },
   {
-    images: [ProjectImg5_4, ProjectImg5_3, ProjectImg5_2, ProjectImg5_1],
-    location: "Houston, Texas",
+    images: [ProjectImg5_2, ProjectImg5_4, ProjectImg5_3, ProjectImg5_1],
+    location: "Katy, Texas",
     title: "I shine car wash",
   },
   {
-    images: [ProjectImg6_1, ProjectImg6_2, ProjectImg6_3, ProjectImg6_4],
-    location: "Houston, Texas",
+    images: [ProjectImg6_4, ProjectImg6_1, ProjectImg6_2, ProjectImg6_3],
+    location: "West Leak, Houston, Texas",
     title: "I shine car wash",
   },
   {
@@ -77,12 +108,14 @@ const projectData = [
   },
   {
     images: [
+      ProjectImg8_7,
+      ProjectImg8_3,
       ProjectImg8_1,
       ProjectImg8_2,
-      ProjectImg8_3,
       ProjectImg8_4,
       ProjectImg8_5,
       ProjectImg8_6,
+      ProjectImg8_8,
     ],
     location: "Harlingen, Texas",
     title: "Club car wash",
@@ -91,6 +124,42 @@ const projectData = [
     images: [ProjectImg9_1, ProjectImg9_2, ProjectImg9_3],
     location: "El Campo, Texas",
     title: "Red tailed Hawk",
+  },
+  {
+    images: [
+      ProjectImg10_5,
+      ProjectImg10_1,
+      ProjectImg10_2,
+      ProjectImg10_3,
+      ProjectImg10_4,
+    ],
+    location: "Weslaco, Texas",
+    title: "I shine car wash",
+  },
+  {
+    images: [ProjectImg11_1, ProjectImg11_2, ProjectImg11_3, ProjectImg11_4],
+    location: "Houston, Texas",
+    title: "Auto Zone",
+  },
+  {
+    images: [ProjectImg12_1, ProjectImg12_2, ProjectImg12_3, ProjectImg13_1],
+    location: "Rosenberg, Texas",
+    title: "OCUSOFT",
+  },
+  {
+    images: [ProjectImg13_1, ProjectImg13_2, ProjectImg13_3, ProjectImg13_4],
+    location: "Houston, Texas",
+    title: "Railing System",
+  },
+  {
+    images: [ProjectImg14_1, ProjectImg14_1],
+    location: "Houston, Texas",
+    title: "Gucci Gallery",
+  },
+  {
+    images: [ProjectImg15_1, ProjectImg15_2, ProjectImg15_3, ProjectImg15_4],
+    location: "Katy Mills, Texas",
+    title: "Miss A",
   },
 ];
 
