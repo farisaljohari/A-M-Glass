@@ -19,8 +19,8 @@ export default function Header() {
         <LeftSide className="flexCenter">
           <div>
             <h1 className="extraBold font60">
-              Welcome to <span style={{ color: "#ff0202" }}>A&M</span>{" "}
-              <span style={{ color: "#1e00ff" }}>Architectural Glass,Inc</span>{" "}
+              Welcome to <span style={{ color: "#1e00ff" }}>A&M</span>{" "}
+              <span style={{ color: "#ff0202" }}>Architectural Glass,Inc</span>{" "}
               ​Website
             </h1>
             <HeaderP className="font18 semiBold">
