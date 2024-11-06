@@ -1,13 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react"; // Import useEffect and useState
 import styled from "styled-components";
-// Assets
-import HeaderImage from "../../assets/img/about.jpeg"; // Replace with your actual image path
+import axios from "axios"; // Import axios
+import { ClipLoader } from "react-spinners"; // Import the spinner
 
 export default function About() {
+  const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state
+
+  useEffect(() => {
+    axios
+      .get("https://a-m-admin-api.onrender.com/picture/about") // Replace with your actual image API endpoint
+      .then((response) => {
+        setImageUrl(`data:image/jpeg;base64,${response.data.image}`); // Assuming the image is in base64 format
+        setLoading(false); // Set loading to false when image is loaded
+      })
+      .catch((error) => {
+        console.error("Error fetching the image:", error);
+        setLoading(false); // Ensure loading is false even on error
+      });
+  }, []);
+
   return (
     <Wrapper id="about">
       <ImageWrapper>
-        <Img src={HeaderImage} alt="About us" />
+        {loading ? ( // Show spinner while loading
+          <SpinnerWrapper>
+            <ClipLoader color="#1e00ff" loading={loading} size={50} />
+          </SpinnerWrapper>
+        ) : (
+          <Img src={imageUrl} alt="About us" />
+        )}
       </ImageWrapper>
 
       <ContentWrapper>
@@ -36,11 +58,20 @@ export default function About() {
   );
 }
 
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Match the height of the image */
+  width: 100%; /* Match the width of the image container */
+`;
+
 const Wrapper = styled.section`
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
-  padding: 80px 20px 0; // Set bottom padding to 0  min-height: 840px;
+  padding: 80px 20px 0;
+  min-height: 840px;
   margin-bottom: 0;
   background: linear-gradient(180deg, #f0f0f0 0%, #ffffff 100%);
   border-radius: 20px;
@@ -52,8 +83,8 @@ const Wrapper = styled.section`
 `;
 
 const ContentWrapper = styled.div`
-  max-width: 600px; // Adjusted width for better balance
-  padding: 20px; // Added padding for spacing
+  max-width: 600px;
+  padding: 20px;
 `;
 
 const Title = styled.h1`
@@ -66,17 +97,17 @@ const Title = styled.h1`
 const Paragraph = styled.p`
   line-height: 1.6rem;
   margin-bottom: 20px;
-  color: #555; // Softer text color
+  color: #555;
 `;
 
 const ImageWrapper = styled.div`
-  max-width: 500px; // Restrict image width for balance
-  flex: 1; // Flex-grow to take remaining space
-  margin-right: 20px; // Space between image and text
+  max-width: 500px;
+  flex: 1;
+  margin-right: 20px;
 `;
 
 const Img = styled.img`
   width: 100%;
-  border-radius: 15px; // Rounded corners for the image
+  border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 `;

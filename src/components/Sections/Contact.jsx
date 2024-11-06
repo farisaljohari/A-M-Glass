@@ -94,7 +94,7 @@ export default function Contact() {
           <Row>
             <FormWrapper className="col-xs-12 col-sm-12 col-md-6 col-lg-8">
               <Form onSubmit={handleSubmit}>
-                <label className="font13">First name:</label>
+                <label className="font13">Full name:</label>
                 <Input
                   type="text"
                   id="name"

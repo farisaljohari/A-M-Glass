@@ -1,179 +1,55 @@
-import React, { useState } from "react";
+/* eslint-disable jsx-a11y/img-redundant-alt */
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
-
-// Assets
-import ProjectImg1_1 from "../../assets/img/projects/Costco1.jpeg";
-import ProjectImg1_2 from "../../assets/img/projects/Costco2.jpeg";
-import ProjectImg1_3 from "../../assets/img/projects/Costco3.jpeg";
-import ProjectImg1_4 from "../../assets/img/projects/Costco4.jpeg";
-import ProjectImg2_1 from "../../assets/img/projects/proj2.1.jpeg";
-import ProjectImg2_2 from "../../assets/img/projects/proj2.2.jpeg";
-import ProjectImg2_4 from "../../assets/img/projects/proj2.3.png";
-import ProjectImg2_3 from "../../assets/img/projects/proj2.3.jpeg";
-import ProjectImg2_5 from "../../assets/img/projects/proj2.5.png";
-import ProjectImg3_1 from "../../assets/img/projects/proj3.1.jpeg";
-import ProjectImg3_2 from "../../assets/img/projects/proj3.2.jpeg";
-import ProjectImg3_3 from "../../assets/img/projects/proj3.3.jpeg";
-import ProjectImg4_1 from "../../assets/img/projects/proj4.1.jpeg";
-import ProjectImg4_2 from "../../assets/img/projects/proj4.2.jpeg";
-import ProjectImg5_1 from "../../assets/img/projects/proj5.1.jpeg";
-import ProjectImg5_2 from "../../assets/img/projects/proj5.2.jpeg";
-import ProjectImg5_3 from "../../assets/img/projects/proj5.3.jpeg";
-import ProjectImg5_4 from "../../assets/img/projects/proj5.4.jpeg";
-import ProjectImg6_1 from "../../assets/img/projects/proj6.1.jpeg";
-import ProjectImg6_2 from "../../assets/img/projects/proj6.2.jpeg";
-import ProjectImg6_3 from "../../assets/img/projects/proj6.3.jpeg";
-import ProjectImg6_4 from "../../assets/img/projects/proj6.4.jpeg";
-import ProjectImg7_1 from "../../assets/img/projects/proj7.1.jpeg";
-import ProjectImg7_2 from "../../assets/img/projects/proj7.2.jpeg";
-import ProjectImg7_3 from "../../assets/img/projects/proj7.3.jpeg";
-import ProjectImg7_4 from "../../assets/img/projects/proj7.4.jpeg";
-import ProjectImg8_1 from "../../assets/img/projects/proj8.1.jpeg";
-import ProjectImg8_2 from "../../assets/img/projects/proj8.2.jpeg";
-import ProjectImg8_3 from "../../assets/img/projects/proj8.3.jpeg";
-import ProjectImg8_4 from "../../assets/img/projects/proj8.4.jpeg";
-import ProjectImg8_5 from "../../assets/img/projects/proj8.5.jpeg";
-import ProjectImg8_6 from "../../assets/img/projects/proj8.6.jpeg";
-import ProjectImg8_7 from "../../assets/img/projects/proj8.7.jpeg";
-import ProjectImg8_8 from "../../assets/img/projects/proj8.8.jpeg";
-import ProjectImg9_1 from "../../assets/img/projects/proj9.1.jpeg";
-import ProjectImg9_2 from "../../assets/img/projects/proj9.2.jpeg";
-import ProjectImg9_3 from "../../assets/img/projects/proj9.3.jpeg";
-import ProjectImg10_1 from "../../assets/img/projects/proj10.1.jpeg";
-import ProjectImg10_2 from "../../assets/img/projects/proj10.2.jpeg";
-import ProjectImg10_3 from "../../assets/img/projects/proj10.3.jpeg";
-import ProjectImg10_4 from "../../assets/img/projects/proj10.4.jpeg";
-import ProjectImg10_5 from "../../assets/img/projects/proj10.5.jpeg";
-import ProjectImg11_1 from "../../assets/img/projects/proj11.1.jpeg";
-import ProjectImg11_2 from "../../assets/img/projects/proj11.4.jpeg";
-import ProjectImg11_3 from "../../assets/img/projects/proj11.2.jpeg";
-import ProjectImg11_4 from "../../assets/img/projects/proj11.3.jpeg";
-import ProjectImg12_1 from "../../assets/img/projects/proj12.1.jpeg";
-import ProjectImg12_2 from "../../assets/img/projects/proj12.4.jpeg";
-import ProjectImg12_3 from "../../assets/img/projects/proj12.2.jpeg";
-import ProjectImg13_1 from "../../assets/img/projects/proj13.1.jpeg";
-import ProjectImg13_2 from "../../assets/img/projects/proj13.2.jpeg";
-import ProjectImg13_3 from "../../assets/img/projects/proj13.3.jpeg";
-import ProjectImg13_4 from "../../assets/img/projects/proj13.4.jpeg";
-import ProjectImg14_1 from "../../assets/img/projects/proj14.1.jpeg";
-import ProjectImg15_1 from "../../assets/img/projects/proj15.1.jpeg";
-import ProjectImg15_2 from "../../assets/img/projects/proj15.2.jpeg";
-import ProjectImg15_3 from "../../assets/img/projects/proj15.3.jpeg";
-import ProjectImg15_4 from "../../assets/img/projects/proj15.4.jpeg";
-
-const projectData = [
-  {
-    images: [ProjectImg1_1, ProjectImg1_2, ProjectImg1_3, ProjectImg1_4],
-    location: "Richmond, Texas",
-    title: "Costco",
-  },
-  {
-    images: [
-      ProjectImg2_4,
-      ProjectImg2_5,
-      ProjectImg2_1,
-      ProjectImg2_2,
-      ProjectImg2_3,
-    ],
-    location: "Houston, Texas, Post Oak Blvd",
-    title: "Tanishq Jewelers",
-  },
-  {
-    images: [ProjectImg3_3, ProjectImg3_1, ProjectImg3_2],
-    location: "Beasley, Texas",
-    title: "Chemical factory",
-  },
-  {
-    images: [ProjectImg4_1, ProjectImg4_2],
-    location: "Houston, Texas",
-    title: "Steel supply",
-  },
-  {
-    images: [ProjectImg5_2, ProjectImg5_4, ProjectImg5_3, ProjectImg5_1],
-    location: "Katy, Texas",
-    title: "I shine car wash",
-  },
-  {
-    images: [ProjectImg6_4, ProjectImg6_1, ProjectImg6_2, ProjectImg6_3],
-    location: "West Leak, Houston, Texas",
-    title: "I shine car wash",
-  },
-  {
-    images: [ProjectImg7_3, ProjectImg7_4, ProjectImg7_1, ProjectImg7_2],
-    location: "Houston, Texas",
-    title: "JD Sport Galleria Mall",
-  },
-  {
-    images: [
-      ProjectImg8_7,
-      ProjectImg8_3,
-      ProjectImg8_1,
-      ProjectImg8_2,
-      ProjectImg8_4,
-      ProjectImg8_5,
-      ProjectImg8_6,
-      ProjectImg8_8,
-    ],
-    location: "Harlingen, Texas",
-    title: "Club car wash",
-  },
-  {
-    images: [ProjectImg9_1, ProjectImg9_2, ProjectImg9_3],
-    location: "El Campo, Texas",
-    title: "Red tailed Hawk",
-  },
-  {
-    images: [
-      ProjectImg10_5,
-      ProjectImg10_1,
-      ProjectImg10_2,
-      ProjectImg10_3,
-      ProjectImg10_4,
-    ],
-    location: "Weslaco, Texas",
-    title: "I shine car wash",
-  },
-  {
-    images: [ProjectImg11_1, ProjectImg11_2, ProjectImg11_3, ProjectImg11_4],
-    location: "Houston, Texas",
-    title: "Auto Zone",
-  },
-  {
-    images: [ProjectImg12_3, ProjectImg12_1, ProjectImg12_2, ProjectImg13_1],
-    location: "Rosenberg, Texas",
-    title: "OCUSOFT",
-  },
-  {
-    images: [ProjectImg13_1, ProjectImg13_2, ProjectImg13_3, ProjectImg13_4],
-    location: "Houston, Texas",
-    title: "Railing System",
-  },
-  {
-    images: [ProjectImg14_1, ProjectImg14_1],
-    location: "Houston, Texas",
-    title: "Gucci Gallery",
-  },
-  {
-    images: [ProjectImg15_1, ProjectImg15_2, ProjectImg15_3, ProjectImg15_4],
-    location: "Katy Mills, Texas",
-    title: "Miss A",
-  },
-];
+import axios from "axios";
+import { ClipLoader } from "react-spinners";
 
 export default function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeProject, setActiveProject] = useState(null);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Open modal with selected project
+  // Fetch projects from API
+  useEffect(() => {
+    const fetchProjects = async () => {
+      // Check local storage for cached data
+      const cachedData = localStorage.getItem("projects");
+      const cachedTime = localStorage.getItem("projectsTime");
+      const cacheDuration = 60 * 60 * 1000; // Cache duration of 1 hour
+
+      if (cachedData && cachedTime && Date.now() - cachedTime < cacheDuration) {
+        setProjects(JSON.parse(cachedData));
+        setLoading(false);
+        return;
+      }
+
+      // Fetch from API if no cached data or expired
+      try {
+        const response = await axios.get(
+          "https://a-m-admin-api.onrender.com/project"
+        );
+        setProjects(response.data);
+        localStorage.setItem("projects", JSON.stringify(response.data)); // Cache the response
+        localStorage.setItem("projectsTime", Date.now()); // Cache the fetch time
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   const handleProjectClick = (project) => {
     setActiveProject(project);
     setModalOpen(true);
   };
 
-  // Close the modal
   const handleCloseModal = () => {
     setModalOpen(false);
     setActiveProject(null);
@@ -187,22 +63,28 @@ export default function Projects() {
             <h1 className="font40 extraBold">Our Projects</h1>
           </HeaderInfo>
           <div className="row">
-            {projectData.map((project, index) => (
-              <ProjectCard
-                className="col-xs-12 col-sm-6" // Two cards per row on small and medium screens
-                key={index}
-                onClick={() => handleProjectClick(project)} // Open modal on click
-              >
-                <RandomAutoplaySlider images={project.images} />
-                <ContentWrapper>
-                  <ProjectTitle>{project.title}</ProjectTitle>
-                  <LocationInfo>
-                    <FontAwesomeIcon icon={faMapMarkerAlt} />
-                    <p>{project.location}</p>
-                  </LocationInfo>
-                </ContentWrapper>
-              </ProjectCard>
-            ))}
+            {loading ? (
+              <LoaderWrapper>
+                <ClipLoader color="#00BFFF" loading={loading} size={50} />
+              </LoaderWrapper>
+            ) : (
+              projects.map((project, index) => (
+                <ProjectCard
+                  className="col-xs-12 col-sm-6"
+                  key={index}
+                  onClick={() => handleProjectClick(project)}
+                >
+                  <RandomAutoplaySlider images={project.images} />
+                  <ContentWrapper>
+                    <ProjectTitle>{project.title}</ProjectTitle>
+                    <LocationInfo>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} />
+                      <p>{project.location}</p>
+                    </LocationInfo>
+                  </ContentWrapper>
+                </ProjectCard>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -229,45 +111,73 @@ export default function Projects() {
 }
 
 // Slider Component inside Modal
-const ModalSlider = ({ images }) => (
-  <Slider
-    dots={false}
-    infinite={true}
-    speed={500}
-    slidesToShow={1}
-    slidesToScroll={1}
-    swipe={true}
-    autoplay={false}
-    arrows={true}
-    prevArrow={<PrevArrow />}
-    nextArrow={<NextArrow />}
-  >
-    {images.map((image, imgIndex) => (
-      <ModalImage key={imgIndex}>
-        <img src={image} alt={`Project Image ${imgIndex + 1}`} />
+const ModalSlider = ({ images }) => {
+  if (images.length === 1) {
+    return (
+      <ModalImage>
+        <img src={images[0].image} alt="Project Image" loading="lazy" />
       </ModalImage>
-    ))}
-  </Slider>
-);
+    );
+  }
+
+  return (
+    <Slider
+      dots={false}
+      infinite={true}
+      speed={500}
+      slidesToShow={1}
+      slidesToScroll={1}
+      swipe={true}
+      autoplay={false}
+      arrows={true}
+      prevArrow={<PrevArrow />}
+      nextArrow={<NextArrow />}
+    >
+      {images.map((image, imgIndex) => (
+        <ModalImage key={imgIndex}>
+          <img
+            src={image.image}
+            alt={`Project Image ${imgIndex + 1}`}
+            loading="lazy"
+          />
+        </ModalImage>
+      ))}
+    </Slider>
+  );
+};
 
 // Auto-playing slider for each project (outside the modal)
-const RandomAutoplaySlider = ({ images }) => (
-  <Slider
-    dots={true}
-    infinite={true}
-    speed={500}
-    slidesToShow={1}
-    slidesToScroll={1}
-    autoplay={true}
-    autoplaySpeed={8000}
-  >
-    {images.map((image, imgIndex) => (
-      <CardImage key={imgIndex}>
-        <img src={image} alt={`Project Image ${imgIndex + 1}`} />
+const RandomAutoplaySlider = ({ images }) => {
+  if (images.length === 1) {
+    return (
+      <CardImage>
+        <img src={images[0].image} alt="Project Image" loading="lazy" />
       </CardImage>
-    ))}
-  </Slider>
-);
+    );
+  }
+
+  return (
+    <Slider
+      dots={true}
+      infinite={true}
+      speed={500}
+      slidesToShow={1}
+      slidesToScroll={1}
+      autoplay={true}
+      autoplaySpeed={8000}
+    >
+      {images.map((image, imgIndex) => (
+        <CardImage key={imgIndex}>
+          <img
+            src={image.image}
+            alt={`Project Image ${imgIndex + 1}`}
+            loading="lazy"
+          />
+        </CardImage>
+      ))}
+    </Slider>
+  );
+};
 
 // Styled Components
 
@@ -424,4 +334,11 @@ const CardImage = styled.div`
       height: 300px; // Reduced height for mobile
     }
   }
+`;
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px; /* Match the height of the image */
+  width: 100%; /* Match the width of the image container */
 `;

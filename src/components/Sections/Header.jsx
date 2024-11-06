@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react"; // Import useEffect and useState
 import styled from "styled-components";
 import LogoIcon from "../../assets/img/full_logo.png";
 // Assets
-import HeaderImage from "../../assets/img/intro.JPG";
 import QuotesIcon from "../../assets/svg/Quotes";
 import Dots from "../../assets/svg/Dots";
 import { Link } from "react-scroll";
+import axios from "axios";
+import { ClipLoader } from "react-spinners"; // Import the spinner
 
 export default function Header() {
+  const [imageUrl, setImageUrl] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [imageUuid, setImageUuid] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state
+
+  useEffect(() => {
+    axios
+      .get("https://a-m-admin-api.onrender.com/picture/main")
+      .then((response) => {
+        setImageUrl(`data:image/png;base64,${response.data.image}`);
+        setImageUuid(response.data.uuid);
+        setLoading(false); // Set loading to false when image is loaded
+      })
+      .catch((error) => {
+        console.error("Error fetching the image:", error);
+        setLoading(false); // Ensure loading is false even on error
+      });
+  }, []);
+
   return (
     <>
       <div id="home" style={{ marginTop: "100px" }}>
         <LogoRow className="flexCenter">
           <img src={LogoIcon} alt="Logo" width={"420px"} />
-        </LogoRow>{" "}
+        </LogoRow>
       </div>
       <Wrapper id="home" className="container flexSpaceCenter">
         <LeftSide className="flexCenter">
@@ -38,28 +58,36 @@ export default function Header() {
         </LeftSide>
         <RightSide>
           <ImageWrapper>
-            <Img
-              className="radius8"
-              src={HeaderImage}
-              alt="office"
-              style={{ zIndex: 9, width: "550px", height: "500px" }}
-            />
-            <QuoteWrapper className="flexCenter darkBg radius8">
-              <QuotesWrapper>
-                <QuotesIcon />
-              </QuotesWrapper>
-              <div>
-                <p className="font15 whiteColor">
-                  <em>
-                    We believe that the smallest things can make a big
-                    difference.
-                  </em>
-                </p>
-              </div>
-            </QuoteWrapper>
-            <DotsWrapper>
-              <Dots />
-            </DotsWrapper>
+            {loading ? ( // Show spinner while loading
+              <SpinnerWrapper>
+                <ClipLoader color="#1e00ff" loading={loading} size={50} />
+              </SpinnerWrapper>
+            ) : (
+              <>
+                <Img
+                  className="radius8"
+                  src={imageUrl} // Use the fetched image URL
+                  alt="office"
+                  style={{ zIndex: 9, width: "550px", height: "500px" }}
+                />
+                <QuoteWrapper className="flexCenter darkBg radius8">
+                  <QuotesWrapper>
+                    <QuotesIcon />
+                  </QuotesWrapper>
+                  <div>
+                    <p className="font15 whiteColor">
+                      <em>
+                        We believe that the smallest things can make a big
+                        difference.
+                      </em>
+                    </p>
+                  </div>
+                </QuoteWrapper>
+                <DotsWrapper>
+                  <Dots />
+                </DotsWrapper>
+              </>
+            )}
           </ImageWrapper>
           <GreyDiv className="lightBg"></GreyDiv>
         </RightSide>
@@ -67,7 +95,13 @@ export default function Header() {
     </>
   );
 }
-
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px; /* Match the height of the image */
+  width: 100%; /* Match the width of the image container */
+`;
 const Wrapper = styled.section`
   width: 100%;
   min-height: 500px;

@@ -6,7 +6,6 @@ import Sidebar from "../Nav/Sidebar";
 import Backdrop from "../Elements/Backdrop";
 // Assets
 import LogoIcon from "../../assets/img/A&M logo.png";
-import LogoPartIcon from "../../assets/img/logo part.png";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
 
 export default function TopNavbar() {
