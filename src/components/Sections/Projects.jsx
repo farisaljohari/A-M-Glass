@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
@@ -6,45 +5,64 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
+import { Button } from "antd";
 
 export default function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeProject, setActiveProject] = useState(null);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1); // Track current page
+  const [totalPages, setTotalPages] = useState(1); // Track total pages
+  const [hasMore, setHasMore] = useState(true); // Track if more projects are available
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   // Fetch projects from API
-  useEffect(() => {
-    const fetchProjects = async () => {
-      // Check local storage for cached data
-      const cachedData = localStorage.getItem("projects");
-      const cachedTime = localStorage.getItem("projectsTime");
-      const cacheDuration = 60 * 60 * 1000; // Cache duration of 1 hour
+  const fetchProjects = async (page = 1) => {
+    setLoading(page === 1); // Set loading true only for the first fetch (initial page load)
+    setButtonLoading(page > 1); // Only show button loading when fetching more data
 
-      if (cachedData && cachedTime && Date.now() - cachedTime < cacheDuration) {
-        setProjects(JSON.parse(cachedData));
-        setLoading(false);
-        return;
-      }
+    try {
+      const response = await axios.get(
+        "https://a-m-admin-api.onrender.com/project",
+        {
+          params: { page, limit: 4 },
+        }
+      );
 
-      // Fetch from API if no cached data or expired
-      try {
-        const response = await axios.get(
-          "https://a-m-admin-api.onrender.com/project"
+      const { data, totalPages } = response.data;
+
+      setProjects((prev) => {
+        const newProjects = data.filter(
+          (newProject) =>
+            !prev.some(
+              (existingProject) => existingProject.uuid === newProject.uuid
+            )
         );
-        setProjects(response.data);
-        localStorage.setItem("projects", JSON.stringify(response.data)); // Cache the response
-        localStorage.setItem("projectsTime", Date.now()); // Cache the fetch time
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+        return [...prev, ...newProjects]; // Append only unique projects
+      });
 
-    fetchProjects();
-  }, []);
+      setTotalPages(totalPages);
+      setHasMore(page < totalPages); // Check if there are more pages to load
+    } catch (error) {
+      const message =
+        error.response?.data?.message || "Error fetching the projects.";
+      console.log(message);
+    } finally {
+      setLoading(false); // Stop page loading once the data is fetched
+      setButtonLoading(false); // Stop button loading once data is fetched for "See More"
+    }
+  };
 
+  useEffect(() => {
+    fetchProjects(currentPage); // Fetch projects on initial load or when page changes
+  }, [currentPage]);
+
+  const handleSeeMore = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1); // Increment page to load more projects
+    }
+  };
   const handleProjectClick = (project) => {
     setActiveProject(project);
     setModalOpen(true);
@@ -86,6 +104,26 @@ export default function Projects() {
               ))
             )}
           </div>
+          {hasMore && !loading && (
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleSeeMore}
+              style={{
+                marginTop: "20px",
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              disabled={buttonLoading} // Disable the button when loading
+            >
+              {buttonLoading ? (
+                <ClipLoader color="#ffffff" loading={true} size={20} />
+              ) : (
+                "See More"
+              )}
+            </Button>
+          )}
         </div>
       </div>
 
@@ -179,7 +217,22 @@ const RandomAutoplaySlider = ({ images }) => {
   );
 };
 
-// Styled Components
+// Pagination button styling
+const SeeMoreButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #00bfff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #008b8b;
+  }
+`;
 
 const Wrapper = styled.section`
   padding: 60px 0;

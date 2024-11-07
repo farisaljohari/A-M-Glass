@@ -176,7 +176,7 @@ const GreyDiv = styled.div`
   top: 0;
   right: 0;
   z-index: 0;
-  background-color: #f6f6f6;
+  background-color: transparent;
   @media (max-width: 960px) {
     display: none;
   }
