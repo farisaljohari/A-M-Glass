@@ -71,7 +71,7 @@ const Wrapper = styled.section`
   justify-content: space-around;
   align-items: flex-start;
   padding: 80px 20px 0;
-  min-height: 840px;
+  min-height: 640px;
   margin-bottom: 0;
   background: linear-gradient(180deg, #f0f0f0 0%, #ffffff 100%);
   border-radius: 20px;
