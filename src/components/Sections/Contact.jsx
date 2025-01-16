@@ -153,7 +153,7 @@ export default function Contact() {
               <div className="contact-item">
                 <FontAwesomeIcon icon={faEnvelope} />
                 <p>
-                  <a href="mailto:info@amglasswork.com">info@amglasswork.com</a>
+                  <a href="mailto:info@amarchglass.com">info@amarchglass.com</a>
                 </p>
               </div>
               <SocialIcons>
